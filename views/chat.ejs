@@ -1,0 +1,30 @@
+<div class="row mb-2">
+  <div class="col-6 text-uppercase fw-bold">
+    <span id="username" class="badge bg-primary" data-user-color="<%= data.user.color %>" data-user-name="<%= data.user.name %>"><%= data.user.name %></span>
+  </div>
+  <div class="col-6 text-end">
+    <div class="badge bg-success"><span id="userOnline"></span> Online</div>
+  </div>
+</div>
+<div class="card border-dark">
+  <div class="card-body p-0">
+    <div id="messageContainer" class="overflow-scroll p-2" style="height: 70vh"></div>
+  </div>
+  <div class="card-footer bg-dark text-white pt-1">
+    <span id="typingStatus" class="d-block mb-2"></span>
+    <div class="input-group">
+      <textarea name="inputMessage" id="inputMessage" rows="2" class="form-control" placeholder="Write something..."></textarea>
+      <button id="btnSendMessage" type="submit" class="btn btn-primary">Kirim</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer" class="d-flex flex-column align-items-end position-absolute top-0 end-0 p-3"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/chat.js"></script>
+<script>
+  const username = '<%= data.user.name %>'
+  const color = '<%= data.user.color %>'
+  setUser({ username, color })
+</script>
