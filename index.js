@@ -10,7 +10,7 @@ const io = socketio(server)
 
 app.use(express.static('public'))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
 
 // layout
 app.set('view engine', 'ejs')
@@ -105,7 +105,6 @@ io.on('connection', (socket) => {
 
     userOnline--
     console.log('User online : ', userOnline)
-    io.emit('userOnline', userOnline)
   })
 })
 

@@ -21,10 +21,24 @@
 
 <div id="toastContainer" class="d-flex flex-column align-items-end position-absolute top-0 end-0 p-3"></div>
 
+<div class="modal fade" id="loginAlert" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">INFORMASI</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Anda baru saja bergabung di chat ini.</p>
+        <p>Jika anda keluar atau memuat ulang halaman (me-<i>refresh</i> halaman), maka anda akan dianggap sebagai pengguna baru dan pesan yang anda kirimkan sebelumnya akan dianggap sebagai pesan pengguna lain</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">Mengerti</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/chat.js"></script>
-<script>
-  const username = '<%= data.user.name %>'
-  const color = '<%= data.user.color %>'
-  setUser({ username, color })
-</script>

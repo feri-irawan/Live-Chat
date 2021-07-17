@@ -12,11 +12,13 @@ const botName = 'FI <span id="username" class="badge bg-primary ms-1" style="fon
 socket.emit('join', username)
 
 // mengirim message ke server bawha ada user yg join
+let date = new Date()
 socket.emit('sendMessage', {
   username: botName,
   color: 'var(--bs-primary)',
   message: `<span class="text-info">@${username}</span> joinned!`,
-  time: new Date().getHours() + '.' + new Date().getMinutes(),
+  date: date.toLocaleDateString(),
+  time: date.getHours() + '.' + date.getMinutes(),
 })
 
 // kemudian jika ada respon dari serve maka tampilkan toast ke seluruh user
@@ -39,6 +41,7 @@ socket.on('join', (res) => {
   var toastList = toastElList.map((toastEl) => {
     return new bootstrap.Toast(toastEl)
   })
+
   toastList.forEach((toast) => toast.show())
 
   // jika toast telah disembunyikan maka hapus elementnya
@@ -79,13 +82,13 @@ socket.on('loadMessages', (res) => {
 
   res.forEach((message) => {
     messageContainer.innerHTML += `
-      <div class="border rounded-3 pt-1 p-2 mb-2" style="max-width: max-content">
-        <div class="d-flex justify-content-between">
-          <span class="fw-bold d-flex align-items-center" style="color:${message.color}">${message.username}</span>
-          <span class="text-end ms-3">${message.time}</span>
-        </div>
-        ${message.message}
-      </div>`
+    <div class="border rounded-3 pt-1 p-2 mb-2 me-5" style="max-width: max-content">
+      <div class="d-flex justify-content-between">
+        <span class="fw-bold d-flex align-items-center" style="color:${message.color}">${message.username}</span>
+        <span class="text-end ms-3">${message.time}</span>
+      </div>
+      ${message.message}
+    </div>`
   })
 })
 
@@ -123,15 +126,20 @@ socket.on('notTyping', () => {
 btnSendMessage.onclick = () => {
   // jika inputMessage masih kosong maka jangan lakukan pengiriman
   if (!inputMessage.value) {
+    inputMessage.classList.add('is-invalid')
     return false
   }
 
+  inputMessage.classList.remove('is-invalid')
+
   // mengirim ke server bawah ada sesorang yg mengirim pesan
+  let date = new Date()
   socket.emit('sendMessage', {
     username,
     color: userColor,
     message: inputMessage.value,
-    time: new Date().getHours() + '.' + new Date().getMinutes(),
+    date: date.toLocaleDateString(),
+    time: date.getHours() + '.' + date.getMinutes(),
   })
 
   // jika pesan telah dikirim maka bersihkan inputMessage
@@ -145,7 +153,7 @@ socket.on('sendMessage', (res) => {
   ringtone.play()
 
   otherMessage = `
-    <div class="border rounded-3 pt-1 p-2 mb-2" style="max-width: max-content">
+    <div class="border rounded-3 pt-1 p-2 mb-2 me-5" style="max-width: max-content">
       <div class="d-flex justify-content-between">
         <span class="fw-bold d-flex align-items-center" style="color:${res.color}">${res.username}</span>
         <span class="text-end ms-3">${res.time}</span>
@@ -154,15 +162,21 @@ socket.on('sendMessage', (res) => {
     </div>`
 
   myMessage = `
-    <div class="bg-primary text-white border rounded-3 pt-1 p-2 mb-2 ms-auto" style="max-width: max-content">
-      <div class="d-flex justify-content-between">
-        <span class="fw-bold d-flex align-items-center" style="color:${res.color}">${res.username}</span>
-        <span class="text-end ms-3">${res.time}</span>
+    <div class="ms-5 mb-2">
+      <div class="bg-primary text-white border rounded-3 pt-1 p-2 ms-auto" style="max-width: max-content">
+        <div class="d-flex justify-content-between">
+          <span class="fw-bold d-flex align-items-center" style="color:${res.color}">${res.username}</span>
+          <span class="text-end ms-3">${res.time}</span>
+        </div>
+        ${res.message}
       </div>
-      ${res.message}
     </div>`
 
   // kemudian append message yang di terima dari server ke messageContainer
   let messageContainer = document.getElementById('messageContainer')
   messageContainer.innerHTML += res.username === username ? myMessage : otherMessage
 })
+
+window.onload = () => {
+  const loginAlert = new bootstrap.Modal(document.getElementById('loginAlert')).show()
+}

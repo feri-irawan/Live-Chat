@@ -1,11 +1,32 @@
-<h1>Login</h1>
-<p>
-  Diperlukan login terlebih dahulu. silahkan masukan nama Anda
-</p>
-<form action="/chat" method="get">
-  <div class="input-group">
-      <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" />
-      <button type="submit" class="btn btn-primary">Join</button>
+<div style="height: 70vh">
+  <h1>Login</h1>
+  <p>Diperlukan login terlebih dahulu. silahkan masukan nama Anda</p>
+  <form id="formUsername" action="/chat" method="get">
+    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" />
+    <div class="invalid-feedback"></div>
+    <div class="row mt-2">
+      <div class="col text-end">
+        <button type="submit" id="btnJoin" class="btn btn-primary">Join</button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const formUsername = document.getElementById('formUsername')
+  const inputName = document.getElementById('nama')
+  const invalidFeedback = document.querySelector('.invalid-feedback')
+
+  formUsername.onsubmit = () => {
+    if (inputName.value === '' || inputName.value === ' ') {
+      inputName.classList.add('is-invalid')
+      invalidFeedback.innerHTML = 'Nama tidak boleh kosong.'
+
+      return false
+    }
+  }
+
+  const d = new Date()
+  console.log(d.toLocaleDateString())
+</script>
