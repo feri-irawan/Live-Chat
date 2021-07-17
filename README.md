@@ -1,2 +1,2 @@
 # Live Chat
-Simple live chat using ❤ and NodeJS
+__FICHAT__, live chat sederhana yang dibuat dengan ❤, NodeJS dan EJS
